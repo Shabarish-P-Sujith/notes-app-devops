@@ -1,11 +1,6 @@
 import mongoose from 'mongoose';
 
 // const MONGODB_URI = process.env.MONGODB_URI || 'mongodb://127.0.0.1:27017/notes-saas';
-const MONGODB_URI = process.env.MONGODB_URI;
-
-if (!MONGODB_URI) {
-  throw new Error('Please define the MONGODB_URI environment variable');
-}
 
 let cached = (global as any).mongoose;
 
@@ -14,6 +9,11 @@ if (!cached) {
 }
 
 async function connectDB() {
+  const MONGODB_URI = process.env.MONGODB_URI;
+
+  if (!MONGODB_URI) {
+    throw new Error('Please define the MONGODB_URI environment variable');
+  }
   if (cached.conn) {
     return cached.conn;
   }
