@@ -5,11 +5,11 @@ import connectDB from '@/lib/db';
 import User from '@/lib/models/User';
 
 export async function getUser(req: Request) {
-  await connectDB();
-  
   const cookieStore = await cookies();
   const token = cookieStore.get('token')?.value;
   if (!token) return null;
+  
+  await connectDB();
 
   try {
     const decoded: any = jwt.verify(token, process.env.JWT_SECRET || 'supersecretjwtkey12345');
